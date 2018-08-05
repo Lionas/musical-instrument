@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument
+package jp.lionas.androidthings.musicalinstrument.presenter.device
 
 import com.google.android.things.contrib.driver.pwmspeaker.Speaker
 
@@ -89,4 +89,11 @@ class Sound(private val speaker: Speaker) {
         }
     }
 
+    fun getCurrentKeyIndex(): Int {
+        return currentStep
+    }
+
+    fun isCurrentOctave(): Boolean {
+        return isOctave
+    }
 }
