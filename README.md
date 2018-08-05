@@ -19,8 +19,8 @@ Pre-requisites
 
 Schematics
 ----------
-<img src="images/breadboard-all.jpg" width="320px">
-<img src="images/circuit-all.jpg" width="320px">
+<img src="images/breadboard-all.jpg" width="600px">
+<img src="images/circuit-all.jpg" width="600px">
 
 Build and install
 =================
