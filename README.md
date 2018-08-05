@@ -27,6 +27,7 @@ Build and install
 =================
 
 On Android Studio, click on the "Run" button.
+
 If you have everything set up correctly, the current value will be displayed to LCD display.
 
 License
