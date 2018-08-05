@@ -5,7 +5,7 @@ This Android Things sample app demonstrates electronic musical instrument using 
 
 Screenshots
 -----------
-<img src="images/instrument-overview.png" width="320px">
+<img src="images/instrument-overview.jpg" width="320px">
 
 Pre-requisites
 --------------
@@ -19,9 +19,9 @@ Pre-requisites
 
 Schematics
 ----------
-<!--
-![Schematics for NXP i.MX7D Starter Kit](images/mcp3008_scheme.png)
--->
+![BreadBoard](images/breadboard-all.png)
+
+![Circuit](images/circuit-all.png)
 
 Build and install
 =================
