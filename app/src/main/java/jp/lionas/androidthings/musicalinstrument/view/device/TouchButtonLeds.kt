@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument.presenter.device
+package jp.lionas.androidthings.musicalinstrument.view.device
 
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat
 import com.google.android.things.pio.Gpio
@@ -51,6 +51,12 @@ class TouchButtonLeds {
             Color.Blue -> ledBlue.value = value
             Color.Green -> ledGreen.value = value
         }
+    }
+
+    fun close() {
+        ledRed.close()
+        ledBlue.close()
+        ledGreen.close()
     }
 
 }

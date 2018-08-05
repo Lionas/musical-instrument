@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument.presenter.device
+package jp.lionas.androidthings.musicalinstrument.view.device
 
 import android.graphics.Color
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat.*
