@@ -22,9 +22,13 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import jp.lionas.androidthings.sensor.mcp3008.MCP3008Driver
 import android.os.Handler
-import jp.lionas.androidthings.musicalinstrument.device.*
-import jp.lionas.androidthings.musicalinstrument.device.TouchButtonLed.*
+import jp.lionas.androidthings.musicalinstrument.presenter.device.*
+import jp.lionas.androidthings.musicalinstrument.presenter.device.TouchButtonLeds.*
 
+/**
+ * Musical Instrument Presenter class
+ * @author Naoki Seto(@Lionas)
+ */
 class MusicalInstrumentPresenter(val sensorManager: SensorManager,
                                  val listener: SensorEventListener) {
 
@@ -36,10 +40,11 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
     private val handler = Handler()
 
     private lateinit var adcDriver: AdcDriver
-    private lateinit var touchButtonLed: TouchButtonLed
+    private lateinit var touchButtonLeds: TouchButtonLeds
     private lateinit var speaker: Speaker
     private lateinit var buttons: Buttons
     private lateinit var segment: Segment
+    private lateinit var rainbowLeds: RainbowLeds
 
     private inner class SensorCallback : SensorManager.DynamicSensorCallback() {
         override fun onDynamicSensorConnected(sensor: Sensor) {
@@ -56,17 +61,18 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
         sensorManager.registerDynamicSensorCallback(callback)
         adcDriver = AdcDriver()
         adcDriver.register()
-        touchButtonLed = TouchButtonLed()
+        touchButtonLeds = TouchButtonLeds()
         speaker = Speaker()
         buttons = Buttons()
         segment = Segment()
         segment.display(speaker.getCurrentKeyString())
         setOnTouchListenerForButtons()
+        rainbowLeds = RainbowLeds()
     }
 
     private fun setOnTouchListenerForButtons() {
         buttons.setOnButtonAEventListener { _, pressed ->
-            touchButtonLed.set(Color.Red, pressed)
+            touchButtonLeds.set(Color.Red, pressed)
             if (!buttons.isPressedA() and pressed) {
                 buttons.setPressedA(true)
                 speaker.updateSemitone(true)
@@ -75,11 +81,12 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
             else if (buttons.isPressedA() and !pressed) {
                 buttons.setPressedA(false)
                 speaker.stop()
+                rainbowLeds.clear()
             }
         }
 
         buttons.setOnButtonBEventListener { _, pressed ->
-            touchButtonLed.set(Color.Green, pressed)
+            touchButtonLeds.set(Color.Green, pressed)
             if (!buttons.isPressedB() and pressed) {
                 buttons.setPressedB(true)
                 speaker.updateSemitone(false)
@@ -88,26 +95,31 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
             else if (buttons.isPressedB() and !pressed) {
                 buttons.setPressedB(false)
                 speaker.stop()
+                rainbowLeds.clear()
             }
         }
 
         buttons.setOnButtonCEventListener { _, pressed ->
             if (!buttons.isPressedC() and pressed) {
-                touchButtonLed.set(Color.Blue, true)
+                touchButtonLeds.set(Color.Blue, true)
                 buttons.setPressedC(true)
                 speaker.updateOctave(true)
             }
             else if (buttons.isPressedC() and pressed) {
-                touchButtonLed.set(Color.Blue, false)
+                touchButtonLeds.set(Color.Blue, false)
                 buttons.setPressedC(false)
                 speaker.updateOctave(false)
+                rainbowLeds.clear()
             }
         }
     }
 
     fun closeDevices() {
         speaker.stop()
+        speaker.close()
         segment.clear()
+        buttons.closeButtons()
+        rainbowLeds.close()
         adcDriver.unregister()
         sensorManager.unregisterDynamicSensorCallback(callback)
     }
@@ -124,10 +136,12 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
         event?.let {
             val sensorValue = it.values[0].toInt()
             if (buttons.isPressedA() || buttons.isPressedB()) {
+                rainbowLeds.set(speaker.getCurrentKeyIndex())
                 speaker.playOnChanged(sensorValue)
             }
             val currentKeyStr = speaker.updateKey(sensorValue)
-            segment.display(currentKeyStr)
+            val currentOctave = if (speaker.isCurrentOctave()) { "+1" } else { "+0" }
+            segment.display("%-2s%2s".format(currentKeyStr, currentOctave))
             return currentKeyStr
         }
         return ""

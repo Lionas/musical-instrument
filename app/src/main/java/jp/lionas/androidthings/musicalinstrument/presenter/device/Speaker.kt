@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument.device
+package jp.lionas.androidthings.musicalinstrument.presenter.device
 
 import com.google.android.things.contrib.driver.pwmspeaker.Speaker
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat
-import jp.lionas.androidthings.musicalinstrument.Sound
 
 /**
  * Rainbow HAT Speaker class
@@ -31,6 +30,10 @@ class Speaker {
 
     init {
         sound = Sound(speaker)
+    }
+
+    fun close() {
+        speaker.close()
     }
 
     fun play() {
@@ -55,6 +58,14 @@ class Speaker {
 
     fun getCurrentKeyString(): String {
         return sound.getCurrentKeyString()
+    }
+
+    fun getCurrentKeyIndex(): Int {
+        return sound.getCurrentKeyIndex()
+    }
+
+    fun isCurrentOctave(): Boolean {
+        return sound.isCurrentOctave()
     }
 
     fun stop() {

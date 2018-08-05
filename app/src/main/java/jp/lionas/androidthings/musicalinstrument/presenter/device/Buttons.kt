@@ -1,4 +1,4 @@
-package jp.lionas.androidthings.musicalinstrument.device
+package jp.lionas.androidthings.musicalinstrument.presenter.device
 
 import com.google.android.things.contrib.driver.button.Button
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat
@@ -16,6 +16,12 @@ class Buttons {
     private var isPressedA: Boolean = false
     private var isPressedB: Boolean = false
     private var isPressedC: Boolean = false
+
+    fun closeButtons() {
+        buttonA.close()
+        buttonB.close()
+        buttonC.close()
+    }
 
     fun setOnButtonAEventListener(listener: (button: Button, pressed: Boolean) -> Unit) {
         buttonA.setOnButtonEventListener(listener)

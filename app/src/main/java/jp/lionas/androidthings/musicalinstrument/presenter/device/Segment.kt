@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument.device
+package jp.lionas.androidthings.musicalinstrument.presenter.device
 
 import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay
 import com.google.android.things.contrib.driver.ht16k33.Ht16k33

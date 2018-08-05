@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument.device
+package jp.lionas.androidthings.musicalinstrument.presenter.device
 
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat
 import com.google.android.things.pio.Gpio
@@ -23,7 +23,7 @@ import com.google.android.things.pio.Gpio
  * Rainbow HAT LED for touch button class
  * @author Naoki Seto(@Lionas)
  */
-class TouchButtonLed {
+class TouchButtonLeds {
 
     enum class Color  {
         Red,

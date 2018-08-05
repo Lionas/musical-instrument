@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument
+package jp.lionas.androidthings.musicalinstrument.view
 
 import android.app.Activity
 import android.content.Context
@@ -24,7 +24,9 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import jp.lionas.androidthings.musicalinstrument.R
 import jp.lionas.androidthings.musicalinstrument.databinding.ActivityHomeBinding
+import jp.lionas.androidthings.musicalinstrument.model.SensorData
 import jp.lionas.androidthings.musicalinstrument.presenter.MusicalInstrumentPresenter
 
 /**
