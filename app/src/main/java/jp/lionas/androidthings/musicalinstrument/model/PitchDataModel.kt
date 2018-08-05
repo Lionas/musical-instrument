@@ -14,28 +14,16 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument.presenter.device
-
-import jp.lionas.androidthings.sensor.mcp3008.MCP3008Driver
+package jp.lionas.androidthings.musicalinstrument.model
 
 /**
- * ADC Driver class
+ * Pitch Data Model
  * @author Naoki Seto(@Lionas)
  */
-class AdcDriver {
+data class PitchDataModel(var v: String) {
+    private var value: String = v
 
-    private var driver: MCP3008Driver = MCP3008Driver(useSpi = true)
-
-    fun register() {
-        driver.register()
+    fun value(): String {
+        return value
     }
-
-    fun unregister() {
-        driver.unregister()
-    }
-
-    fun setLowPowerMode(enable: Boolean) {
-        driver.setLowPowerMode(enable)
-    }
-
 }
