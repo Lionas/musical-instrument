@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-/build
-=======
 *.iml
 .gradle
 /local.properties
@@ -11,4 +8,3 @@
 /build
 /captures
 .externalNativeBuild
->>>>>>> Stashed changes
