@@ -14,16 +14,31 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument
+package jp.lionas.androidthings.musicalinstrument.device
+
+import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay
+import com.google.android.things.contrib.driver.ht16k33.Ht16k33
+import com.google.android.things.contrib.driver.rainbowhat.RainbowHat
 
 /**
- * Sensor Data Model
+ * Rainbow HAT AlphanumericDisplay class
  * @author Naoki Seto(@Lionas)
  */
-data class SensorData(var v: String) {
-    private var value: String = v
+class Segment {
 
-    fun value(): String {
-        return value
+    private var segment: AlphanumericDisplay = RainbowHat.openDisplay()
+
+    init {
+        segment.setBrightness(Ht16k33.HT16K33_BRIGHTNESS_MAX)
+        segment.setEnabled(true)
     }
+
+    fun display(message: String) {
+        segment.display(message)
+    }
+
+    fun clear() {
+        segment.clear()
+    }
+
 }

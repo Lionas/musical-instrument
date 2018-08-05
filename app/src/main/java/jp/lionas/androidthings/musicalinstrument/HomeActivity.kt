@@ -23,59 +23,38 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.hardware.SensorManager.DynamicSensorCallback
 import android.os.Bundle
-import android.os.Handler
 import jp.lionas.androidthings.musicalinstrument.databinding.ActivityHomeBinding
 import jp.lionas.androidthings.musicalinstrument.presenter.MusicalInstrumentPresenter
 
 /**
- * Analog to Digital Converter MusicalInstrumentPresenter Sample App
- * Musical instrument using Rainbow HAT
+ * Musical instrument for Android Things with Rainbow HAT
  * @author Naoki Seto(@Lionas)
  */
 class HomeActivity : Activity(), SensorEventListener {
 
-    private val callback = SensorCallback()
     private lateinit var sensorManager: SensorManager
     private lateinit var binding: ActivityHomeBinding
-
-    private val handler = Handler()
-    private val musicalInstrumentDriver = MusicalInstrumentPresenter()
+    private lateinit var presenter: MusicalInstrumentPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        sensorManager.registerDynamicSensorCallback(callback)
-
-        musicalInstrumentDriver.initDevices()
-        binding.data = SensorData(musicalInstrumentDriver.getCurrentKeyString())
+        presenter = MusicalInstrumentPresenter(sensorManager, this@HomeActivity)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        presenter.openDevices()
+        binding.data = SensorData(presenter.getCurrentKeyString())
     }
 
     override fun onDestroy() {
-        musicalInstrumentDriver.closeDevices()
-        sensorManager.unregisterDynamicSensorCallback(callback)
+        presenter.closeDevices()
         super.onDestroy()
-    }
-
-    private inner class SensorCallback : DynamicSensorCallback() {
-
-        override fun onDynamicSensorConnected(sensor: Sensor) {
-            musicalInstrumentDriver.onDynamicSensorConnected(this@HomeActivity, sensor, sensorManager, handler)
-        }
-
-        override fun onDynamicSensorDisconnected(sensor: Sensor?) {
-            musicalInstrumentDriver.onDynamicSensorDisconnected(this@HomeActivity, sensorManager, handler)
-            super.onDynamicSensorDisconnected(sensor)
-        }
-
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
     override fun onSensorChanged(event: SensorEvent?) {
-        binding.data = SensorData(musicalInstrumentDriver.onSensorChanged(event))
+        binding.data = SensorData(presenter.onSensorChanged(event))
     }
 
 }
