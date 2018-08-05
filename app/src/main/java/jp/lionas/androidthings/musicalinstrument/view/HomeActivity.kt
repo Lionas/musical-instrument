@@ -26,7 +26,7 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import jp.lionas.androidthings.musicalinstrument.R
 import jp.lionas.androidthings.musicalinstrument.databinding.ActivityHomeBinding
-import jp.lionas.androidthings.musicalinstrument.model.SensorData
+import jp.lionas.androidthings.musicalinstrument.model.PitchDataModel
 import jp.lionas.androidthings.musicalinstrument.presenter.MusicalInstrumentPresenter
 
 /**
@@ -45,7 +45,7 @@ class HomeActivity : Activity(), SensorEventListener {
         presenter = MusicalInstrumentPresenter(sensorManager, this@HomeActivity)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         presenter.openDevices()
-        binding.data = SensorData(presenter.getCurrentKeyString())
+        binding.data = PitchDataModel(presenter.getCurrentKeyString())
     }
 
     override fun onDestroy() {
@@ -56,7 +56,7 @@ class HomeActivity : Activity(), SensorEventListener {
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
     override fun onSensorChanged(event: SensorEvent?) {
-        binding.data = SensorData(presenter.onSensorChanged(event))
+        binding.data = PitchDataModel(presenter.onSensorChanged(event))
     }
 
 }

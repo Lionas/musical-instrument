@@ -14,31 +14,28 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument.presenter.device
+package jp.lionas.androidthings.musicalinstrument.presenter
 
-import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay
-import com.google.android.things.contrib.driver.ht16k33.Ht16k33
-import com.google.android.things.contrib.driver.rainbowhat.RainbowHat
+import jp.lionas.androidthings.sensor.mcp3008.MCP3008Driver
 
 /**
- * Rainbow HAT AlphanumericDisplay class
+ * ADC Driver class
  * @author Naoki Seto(@Lionas)
  */
-class Segment {
+class AdcDriver {
 
-    private var segment: AlphanumericDisplay = RainbowHat.openDisplay()
+    private var driver: MCP3008Driver = MCP3008Driver(useSpi = true)
 
-    init {
-        segment.setBrightness(Ht16k33.HT16K33_BRIGHTNESS_MAX)
-        segment.setEnabled(true)
+    fun register() {
+        driver.register()
     }
 
-    fun display(message: String) {
-        segment.display(message)
+    fun unregister() {
+        driver.unregister()
     }
 
-    fun clear() {
-        segment.clear()
+    fun setLowPowerMode(enable: Boolean) {
+        driver.setLowPowerMode(enable)
     }
 
 }

@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package jp.lionas.androidthings.musicalinstrument.presenter.device
+package jp.lionas.androidthings.musicalinstrument.view.device
 
 import com.google.android.things.contrib.driver.pwmspeaker.Speaker
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat
+import jp.lionas.androidthings.musicalinstrument.presenter.Sound
 
 /**
  * Rainbow HAT Speaker class
@@ -45,15 +46,15 @@ class Speaker {
     }
 
     fun updateSemitone(isSemitone: Boolean) {
-        sound.updateSemitone(isSemitone)
+        sound.setSemitone(isSemitone)
     }
 
     fun updateOctave(isOctave: Boolean) {
-        sound.updateOctave(isOctave)
+        sound.setOctave(isOctave)
     }
 
     fun updateKey(value: Int): String {
-        return sound.updateKey(value)
+        return sound.setCurrentKey(value)
     }
 
     fun getCurrentKeyString(): String {

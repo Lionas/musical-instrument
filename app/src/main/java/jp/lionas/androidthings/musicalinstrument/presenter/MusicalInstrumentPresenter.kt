@@ -22,8 +22,8 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import jp.lionas.androidthings.sensor.mcp3008.MCP3008Driver
 import android.os.Handler
-import jp.lionas.androidthings.musicalinstrument.presenter.device.*
-import jp.lionas.androidthings.musicalinstrument.presenter.device.TouchButtonLeds.*
+import jp.lionas.androidthings.musicalinstrument.view.device.*
+import jp.lionas.androidthings.musicalinstrument.view.device.TouchButtonLeds.*
 
 /**
  * Musical Instrument Presenter class
@@ -118,8 +118,9 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
         speaker.stop()
         speaker.close()
         segment.clear()
-        buttons.closeButtons()
+        buttons.close()
         rainbowLeds.close()
+        touchButtonLeds.close()
         adcDriver.unregister()
         sensorManager.unregisterDynamicSensorCallback(callback)
     }
