@@ -18,7 +18,6 @@ package jp.lionas.androidthings.musicalinstrument.view.device
 
 import com.google.android.things.contrib.driver.pwmspeaker.Speaker
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat
-import jp.lionas.androidthings.musicalinstrument.presenter.Sound
 
 /**
  * Rainbow HAT Speaker class
@@ -26,50 +25,18 @@ import jp.lionas.androidthings.musicalinstrument.presenter.Sound
  */
 class Speaker {
 
-    private var speaker: Speaker = RainbowHat.openPiezo()
-    private var sound: Sound
+    var speaker: Speaker = RainbowHat.openPiezo()
 
-    init {
-        sound = Sound(speaker)
+    fun play(frequency: Double) {
+        speaker.play(frequency)
+    }
+
+    fun stop() {
+        speaker.stop()
     }
 
     fun close() {
         speaker.close()
     }
 
-    fun play() {
-        sound.play()
-    }
-
-    fun playOnChanged(value: Int) {
-        sound.playOnChanged(value)
-    }
-
-    fun updateSemitone(isSemitone: Boolean) {
-        sound.setSemitone(isSemitone)
-    }
-
-    fun updateOctave(isOctave: Boolean) {
-        sound.setOctave(isOctave)
-    }
-
-    fun updateKey(value: Int): String {
-        return sound.setCurrentKey(value)
-    }
-
-    fun getCurrentKeyString(): String {
-        return sound.getCurrentKeyString()
-    }
-
-    fun getCurrentKeyIndex(): Int {
-        return sound.getCurrentKeyIndex()
-    }
-
-    fun isCurrentOctave(): Boolean {
-        return sound.isCurrentOctave()
-    }
-
-    fun stop() {
-        speaker.stop()
-    }
 }
