@@ -39,9 +39,9 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
     private val callback = SensorCallback()
     private val handler = Handler()
 
+    private lateinit var sound: Sound
     private lateinit var adcDriver: AdcDriver
     private lateinit var touchButtonLeds: TouchButtonLeds
-    private lateinit var speaker: Speaker
     private lateinit var buttons: Buttons
     private lateinit var segment: Segment
     private lateinit var rainbowLeds: RainbowLeds
@@ -62,10 +62,10 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
         adcDriver = AdcDriver()
         adcDriver.register()
         touchButtonLeds = TouchButtonLeds()
-        speaker = Speaker()
+        sound = Sound(Speaker())
         buttons = Buttons()
         segment = Segment()
-        segment.display(speaker.getCurrentKeyString())
+        segment.display(sound.getCurrentKeyString())
         setOnTouchListenerForButtons()
         rainbowLeds = RainbowLeds()
     }
@@ -75,12 +75,12 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
             touchButtonLeds.set(Color.Red, pressed)
             if (!buttons.isPressedA() and pressed) {
                 buttons.setPressedA(true)
-                speaker.updateSemitone(true)
-                speaker.play()
+                sound.setSemitone(true)
+                sound.play()
             }
             else if (buttons.isPressedA() and !pressed) {
                 buttons.setPressedA(false)
-                speaker.stop()
+                sound.stop()
                 rainbowLeds.clear()
             }
         }
@@ -89,12 +89,12 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
             touchButtonLeds.set(Color.Green, pressed)
             if (!buttons.isPressedB() and pressed) {
                 buttons.setPressedB(true)
-                speaker.updateSemitone(false)
-                speaker.play()
+                sound.setSemitone(false)
+                sound.play()
             }
             else if (buttons.isPressedB() and !pressed) {
                 buttons.setPressedB(false)
-                speaker.stop()
+                sound.stop()
                 rainbowLeds.clear()
             }
         }
@@ -103,20 +103,20 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
             if (!buttons.isPressedC() and pressed) {
                 touchButtonLeds.set(Color.Blue, true)
                 buttons.setPressedC(true)
-                speaker.updateOctave(true)
+                sound.setOctave(true)
             }
             else if (buttons.isPressedC() and pressed) {
                 touchButtonLeds.set(Color.Blue, false)
                 buttons.setPressedC(false)
-                speaker.updateOctave(false)
+                sound.setOctave(false)
                 rainbowLeds.clear()
             }
         }
     }
 
     fun closeDevices() {
-        speaker.stop()
-        speaker.close()
+        sound.stop()
+        sound.close()
         segment.clear()
         buttons.close()
         rainbowLeds.close()
@@ -130,18 +130,18 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
     }
 
     fun getCurrentKeyString(): String {
-        return speaker.getCurrentKeyString()
+        return sound.getCurrentKeyString()
     }
 
     fun onSensorChanged(event: SensorEvent?): String {
         event?.let {
             val sensorValue = it.values[0].toInt()
             if (buttons.isPressedA() || buttons.isPressedB()) {
-                rainbowLeds.set(speaker.getCurrentKeyIndex())
-                speaker.playOnChanged(sensorValue)
+                rainbowLeds.set(sound.getCurrentKeyIndex())
+                sound.playOnChanged(sensorValue)
             }
-            val currentKeyStr = speaker.updateKey(sensorValue)
-            val currentOctave = if (speaker.isCurrentOctave()) { "+1" } else { "+0" }
+            val currentKeyStr = sound.setCurrentKey(sensorValue)
+            val currentOctave = if (sound.isCurrentOctave()) { "+1" } else { "+0" }
             segment.display("%-2s%2s".format(currentKeyStr, currentOctave))
             return currentKeyStr
         }

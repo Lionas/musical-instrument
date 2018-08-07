@@ -16,8 +16,8 @@
 
 package jp.lionas.androidthings.musicalinstrument.presenter
 
-import com.google.android.things.contrib.driver.pwmspeaker.Speaker
 import jp.lionas.androidthings.musicalinstrument.model.SoundModel
+import jp.lionas.androidthings.musicalinstrument.view.device.Speaker
 
 /**
  * Sound class for Sample
@@ -72,5 +72,13 @@ class Sound(private val speaker: Speaker) {
 
     fun isCurrentOctave(): Boolean {
         return soundModel.isOctave
+    }
+
+    fun stop() {
+        speaker.stop()
+    }
+
+    fun close() {
+        speaker.close()
     }
 }
