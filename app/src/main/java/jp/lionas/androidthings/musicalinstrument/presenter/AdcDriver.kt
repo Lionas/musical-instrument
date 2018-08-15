@@ -24,7 +24,7 @@ import jp.lionas.androidthings.sensor.mcp3008.MCP3008Driver
  */
 class AdcDriver {
 
-    private var driver: MCP3008Driver = MCP3008Driver(useSpi = true)
+    private var driver: MCP3008Driver = MCP3008Driver()
 
     fun register() {
         driver.register()
