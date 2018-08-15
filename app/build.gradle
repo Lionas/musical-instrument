@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    implementation 'jp.lionas.androidthings.sensor:mcp3008:1.0'
+    implementation 'jp.lionas.androidthings.sensor:mcp3008:1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -36,6 +36,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'com.google.android.things:androidthings:1.0'
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.15.0'
+    testImplementation 'org.mockito:mockito-core:2.18.3'
     implementation 'com.google.android.things.contrib:driver-rainbowhat:1.0'
 }
