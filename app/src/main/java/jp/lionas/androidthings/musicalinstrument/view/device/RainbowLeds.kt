@@ -57,7 +57,7 @@ class RainbowLeds {
     fun clear() {
         for (i in 0 until LEDSTRIP_LENGTH) {
             rainbow[i] = Color.HSVToColor(0, floatArrayOf(0f, 0f, 0f))
-            ledstrip.write(rainbow)
         }
+        ledstrip.write(rainbow)
     }
 }
