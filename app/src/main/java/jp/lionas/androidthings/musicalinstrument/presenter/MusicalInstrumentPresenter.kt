@@ -117,7 +117,7 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
     fun closeDevices() {
         sound.stop()
         sound.close()
-        segment.clear()
+        segment.close()
         buttons.close()
         rainbowLeds.close()
         touchButtonLeds.close()
@@ -144,8 +144,9 @@ class MusicalInstrumentPresenter(val sensorManager: SensorManager,
             val currentOctave = if (sound.isCurrentOctave()) { "+1" } else { "+0" }
             segment.display("%-2s%2s".format(currentKeyStr, currentOctave))
             return currentKeyStr
-        }
-        return ""
+        } ?:
+            segment.clear()
+            return ""
     }
 
     private fun onDynamicSensorConnected(listener: SensorEventListener,

@@ -31,6 +31,7 @@ class Segment {
     init {
         segment.setBrightness(Ht16k33.HT16K33_BRIGHTNESS_MAX)
         segment.setEnabled(true)
+        segment.clear()
     }
 
     fun display(message: String) {
@@ -41,4 +42,7 @@ class Segment {
         segment.clear()
     }
 
+    fun close() {
+        segment.close()
+    }
 }
